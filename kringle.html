@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kringle Tech Solutions — Data, Security & Web</title>
+  <meta name="description" content="Kringle Tech Solutions: Data analysis, cyber security, website design, tech consultation, networking and system development." />
+  <link rel="icon" href="data:;base64,=">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --muted:#666f7a;
+      --accent:#5b21b6; /* indigo-ish */
+      --accent-2:#06b6d4; /* cyan */
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --shadow: 0 6px 18px rgba(14,20,40,0.06);
+      --maxw:1100px;
+      --gap:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#f8fbff 0%, var(--bg) 100%);
+      color:#0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Layout */
+    .container{max-width:var(--maxw); margin:0 auto; padding:36px 20px;}
+    header.site-header{
+      background:#fff;
+      border-bottom:1px solid rgba(15,23,36,0.04);
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(6px);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:var(--maxw); margin:0 auto; padding:14px 20px;}
+    .brand{display:flex; gap:12px; align-items:center; text-decoration:none; color:inherit}
+    .brand .logo{
+      width:48px; height:48px; border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px;
+      box-shadow: 0 6px 20px rgba(91,33,182,0.12);
+    }
+    .brand .title{line-height:1}
+    .brand .title .name{font-weight:700; font-size:16px}
+    .brand .title .tag{font-size:12px; color:var(--muted)}
+
+    nav.main-nav{display:flex; gap:18px; align-items:center}
+    nav.main-nav a{color:#0f1724; text-decoration:none; font-weight:500}
+    .cta{background:var(--accent); color:#fff; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600; box-shadow:var(--shadow)}
+    .menu-btn{display:none; border:0; background:transparent; cursor:pointer}
+
+    /* Hero */
+    .hero{padding:56px 0 40px; display:grid; grid-template-columns:1fr 420px; gap:36px; align-items:center}
+    .hero h1{font-size:34px; line-height:1.05; margin:0 0 14px; letter-spacing:-0.02em}
+    .lead{color:var(--muted); margin:0 0 20px; max-width:54ch}
+    .hero .actions{display:flex; gap:12px; flex-wrap:wrap}
+    .btn-secondary{border:1px solid rgba(15,23,36,0.06); padding:10px 14px; border-radius:10px; background:#fff; text-decoration:none; color:inherit}
+    .stats{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
+    .stat{background:var(--card); padding:12px 14px; border-radius:10px; box-shadow:var(--shadow); min-width:120px}
+    .stat .n{font-weight:700; font-size:18px}
+    .illustration{background:linear-gradient(180deg,#fff,#f0f7ff); border-radius:16px; padding:22px; box-shadow:var(--shadow); display:flex;align-items:center;justify-content:center; min-height:260px}
+
+    /* Cards grid */
+    .grid{display:grid; gap:20px}
+    .three{grid-template-columns:repeat(3,1fr)}
+    .two{grid-template-columns:repeat(2,1fr)}
+    .one{grid-template-columns:1fr}
+    .service-card{background:var(--card); padding:18px; border-radius:12px; box-shadow:var(--shadow); border:1px solid rgba(10,12,18,0.04)}
+    .service-card h3{margin:0 0 8px; font-size:16px}
+    .service-card p{margin:0;color:var(--muted); font-size:14px}
+
+    /* Features / split */
+    .split{display:flex; gap:28px; align-items:stretch}
+    .split .left{flex:1}
+    .split .right{flex:1; display:flex; align-items:center; justify-content:center}
+
+    /* Portfolio */
+    .project{border-radius:12px; overflow:hidden; display:flex; flex-direction:column; background:linear-gradient(180deg,#fff,#fbfdff); box-shadow:var(--shadow)}
+    .project .meta{padding:14px}
+
+    /* Pricing */
+    .price-card{padding:18px; border-radius:12px; border:1px solid rgba(10,12,18,0.04); background:linear-gradient(180deg,#fff,#f7fbff); box-shadow:var(--shadow)}
+    .price{font-size:28px; font-weight:800}
+    .price-sub{color:var(--muted); font-size:14px}
+
+    /* Contact */
+    form.contact-form{display:grid; gap:12px; background:var(--card); padding:18px; border-radius:12px; box-shadow:var(--shadow)}
+    input, textarea, select{padding:12px; border-radius:8px; border:1px solid rgba(10,12,18,0.06); font-family:inherit; font-size:14px}
+    button[type="submit"]{background:var(--accent); color:#fff; border:0; padding:12px 14px; border-radius:10px; font-weight:700; cursor:pointer}
+
+    /* Footer */
+    footer{padding:28px 0; color:var(--muted)}
+    .foot-inner{display:flex; justify-content:space-between; gap:20px; align-items:center; flex-wrap:wrap; max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr; padding:36px 0}
+      nav.main-nav{display:none}
+      .menu-btn{display:block}
+      .container{padding:26px 16px}
+      .three{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:640px){
+      .three{grid-template-columns:1fr}
+      .split{flex-direction:column}
+      .hero h1{font-size:28px}
+    }
+
+    /* subtle link styles */
+    a.simple { color:var(--accent); text-decoration:none; font-weight:600 }
+    .badge { display:inline-block; font-size:12px; padding:6px 8px; border-radius:999px; background:rgba(6,182,212,0.12); color:var(--accent-2); font-weight:600 }
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="nav-inner" role="navigation" aria-label="Main">
+      <a class="brand" href="#home">
+        <div class="logo" aria-hidden="true">K</div>
+        <div class="title">
+          <div class="name">Kringle Tech Solutions</div>
+          <div class="tag">Data • Security • Web • Networks • Systems</div>
+        </div>
+      </a>
+
+      <nav class="main-nav" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="cta">Contact</a>
+      </nav>
+
+      <button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" id="menuBtn" title="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f1724" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" style="display:none; padding:12px 20px; border-top:1px solid rgba(15,23,36,0.04); background:#fff">
+      <a href="#services" style="display:block; padding:10px 0; text-decoration:none; color:inherit">Services</a>
+      <a href="#portfolio" style="display:block; padding:10px 0; text-decoration:none; color:inherit">Portfolio</a>
+      <a href="#pricing" style="display:block; padding:10px 0; text-decoration:none; color:inherit">Pricing</a>
+      <a href="#contact" style="display:block; padding:10px 0; text-decoration:none; color:inherit">Contact</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="container hero" aria-labelledby="hero-heading">
+      <div>
+        <h1 id="hero-heading">Build smarter systems, protect your data, and grow with confidence.</h1>
+        <p class="lead">Kringle Tech Solutions provides data analysis, cybersecurity, website design, tech consultation, networking and system development for businesses of every size.</p>
+
+        <div class="actions">
+          <a class="cta" href="#contact">Get a free consult</a>
+          <a class="btn-secondary" href="#services">Our services</a>
+        </div>
+
+        <div class="stats" role="list" aria-label="Key stats">
+          <div class="stat" role="listitem"><div class="n">10+</div><div style="font-size:13px;color:var(--muted)">Years in business</div></div>
+          <div class="stat" role="listitem"><div class="n">200+</div><div style="font-size:13px;color:var(--muted)">Projects delivered</div></div>
+          <div class="stat" role="listitem"><div class="n">95%</div><div style="font-size:13px;color:var(--muted)">Customer satisfaction</div></div>
+          <div class="stat" role="listitem"><div class="n">24/7</div><div style="font-size:13px;color:var(--muted)">Support</div></div>
+        </div>
+      </div>
+
+      <aside class="illustration" aria-hidden="true">
+        <!-- Simple illustrative SVG -->
+        <svg width="320" height="220" viewBox="0 0 320 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration">
+          <rect x="6" y="6" width="308" height="208" rx="14" fill="white" stroke="#e6eefc"/>
+          <g transform="translate(22,22)">
+            <rect x="0" y="0" width="150" height="86" rx="10" fill="#fff" stroke="#e6eefc"/>
+            <rect x="170" y="12" width="110" height="110" rx="10" fill="#fff" stroke="#e6eefc"/>
+            <circle cx="90" cy="152" r="28" fill="#fff" stroke="#e6eefc"/>
+            <path d="M12 16h126" stroke="#c7d6ff" stroke-width="4" stroke-linecap="round"/>
+            <path d="M174 40h90" stroke="#c7d6ff" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </aside>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="container" aria-labelledby="services-heading">
+      <div style="text-align:center; margin-bottom:18px">
+        <h2 id="services-heading">Our services</h2>
+        <p style="color:var(--muted); margin-top:8px">Full-stack technology services to help your business thrive.</p>
+      </div>
+
+      <div class="grid three" style="margin-bottom:28px">
+        <div class="service-card">
+          <h3>Data Analysis &amp; BI</h3>
+          <p>ETL, dashboards, predictive analytics and data pipelines to convert raw data into clear decisions.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Speak to an expert →</a></p>
+        </div>
+
+        <div class="service-card">
+          <h3>Cyber Security</h3>
+          <p>Security assessments, penetration testing, SOC setup, compliance guidance and incident response plans.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Request an audit →</a></p>
+        </div>
+
+        <div class="service-card">
+          <h3>Website Design</h3>
+          <p>Fast, accessible, responsive websites and web apps — from design and development to ongoing maintenance.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Get a quote →</a></p>
+        </div>
+
+        <div class="service-card">
+          <h3>Tech Consultation</h3>
+          <p>Strategic tech roadmaps, cloud migration planning, vendor evaluation and architecture reviews.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Book consultation →</a></p>
+        </div>
+
+        <div class="service-card">
+          <h3>Networking</h3>
+          <p>Design and implementation of secure, scalable LAN/WAN and wireless networks with monitoring & management.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Discuss network →</a></p>
+        </div>
+
+        <div class="service-card">
+          <h3>System Development</h3>
+          <p>Custom backend/frontend, APIs, automation and system integration to make your tech ecosystem sing.</p>
+          <p style="margin-top:10px"><a class="simple" href="#contact">Start a project →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why choose / Features -->
+    <section class="container" aria-labelledby="why-heading" style="margin-bottom:28px">
+      <div class="split">
+        <div class="left">
+          <h3 id="why-heading">Why choose Kringle Tech</h3>
+          <p style="color:var(--muted)">We combine deep technical expertise with a practical, outcome-focused process to help you reduce cost, increase security, and accelerate growth.</p>
+
+          <ul style="margin-top:14px; padding-left:18px; color:var(--muted);">
+            <li style="margin-bottom:8px"><strong>Security-first approach:</strong> We bake security into designs, not bolt it on later.</li>
+            <li style="margin-bottom:8px"><strong>Data-driven outcomes:</strong> Measure everything and improve continuously with analytics.</li>
+            <li style="margin-bottom:8px"><strong>Reliable support:</strong> SLA-backed support and maintenance so your systems keep running.</li>
+          </ul>
+
+          <div style="margin-top:14px; background:var(--card); padding:12px; border-radius:10px; box-shadow:var(--shadow)">
+            <strong>Sample engagement</strong>
+            <ol style="margin-top:10px; color:var(--muted)">
+              <li>Discovery &amp; security review</li>
+              <li>Design &amp; prototype</li>
+              <li>Implementation &amp; testing</li>
+              <li>Handover, training &amp; SLA</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="right" aria-hidden="true">
+          <div style="max-width:360px; text-align:center">
+            <div style="font-size:13px; margin-bottom:8px" class="badge">Trusted partner</div>
+            <h4 style="margin:0 0 8px">Reliable technical delivery</h4>
+            <p style="color:var(--muted)">We focus on measurable impact and clear timelines. Security, scalability and maintainability are baked in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio" class="container" aria-labelledby="portfolio-heading" style="margin-bottom:28px">
+      <div style="text-align:center; margin-bottom:18px">
+        <h2 id="portfolio-heading">Recent projects</h2>
+        <p style="color:var(--muted); margin-top:8px">Examples of work across data, security and web.</p>
+      </div>
+
+      <div class="grid three">
+        <article class="project">
+          <div style="height:130px; background:linear-gradient(90deg,#eef2ff,#e6fffa); display:flex; align-items:center; justify-content:center; font-weight:700; color:#0f1724">Retail Analytics Dashboard</div>
+          <div class="meta">
+            <div style="font-weight:700">Retail Analytics Dashboard <span style="font-size:12px; color:var(--muted);">— Data</span></div>
+            <div style="color:var(--muted); margin-top:6px">Realtime sales &amp; inventory analytics with predictive restock and KPI alerts.</div>
+            <div style="margin-top:10px"><a class="simple" href="#contact">Learn more →</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div style="height:130px; background:linear-gradient(90deg,#fff7ed,#fff1f2); display:flex; align-items:center; justify-content:center; font-weight:700; color:#0f1724">Healthcare Security Audit</div>
+          <div class="meta">
+            <div style="font-weight:700">Healthcare Security Audit <span style="font-size:12px; color:var(--muted);">— Security</span></div>
+            <div style="color:var(--muted); margin-top:6px">Full penetration test, HIPAA alignment and remediation roadmap.</div>
+            <div style="margin-top:10px"><a class="simple" href="#contact">Request audit →</a></div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div style="height:130px; background:linear-gradient(90deg,#fff,#eef2ff); display:flex; align-items:center; justify-content:center; font-weight:700; color:#0f1724">Corporate Website & CMS</div>
+          <div class="meta">
+            <div style="font-weight:700">Corporate Website &amp; CMS <span style="font-size:12px; color:var(--muted);">— Web</span></div>
+            <div style="color:var(--muted); margin-top:6px">Marketing site, blog, SEO optimizations and easy-to-use CMS for in-house teams.</div>
+            <div style="margin-top:10px"><a class="simple" href="#contact">Start project →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="container" aria-labelledby="pricing-heading" style="margin-bottom:28px">
+      <div style="text-align:center; margin-bottom:18px">
+        <h2 id="pricing-heading">Pricing (example tiers)</h2>
+        <p style="color:var(--muted); margin-top:8px">Simple, predictable pricing. Contact us for custom enterprise plans.</p>
+      </div>
+
+      <div class="grid three">
+        <div class="price-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div><strong>Starter</strong><div style="color:var(--muted); font-size:13px">Small teams</div></div>
+            <div class="price">Ksh.12000</div>
+          </div>
+          <div style="margin-top:10px; color:var(--muted)">Per month — Basic monitoring, small site & periodic reports</div>
+          <ul style="margin-top:12px; color:var(--muted)">
+            <li>Website hosting & updates</li>
+            <li>Monthly analytics report</li>
+            <li>Basic security hardening</li>
+          </ul>
+          <div style="margin-top:12px"><a class="cta" href="#contact">Choose Starter</a></div>
+        </div>
+
+        <div class="price-card">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div><strong>Business</strong><div style="color:var(--muted); font-size:13px">Growing companies</div></div>
+            <div class="price">Ksh.25,000</div>
+          </div>
+          <div style="margin-top:10px; color:var(--muted)">Per month — Advanced analytics, security monitoring & monthly consult.</div>
+          <ul style="margin-top:12px; color:var(--muted)">
+            <li>Custom dashboards</li>
+            <li>Penetration test (annual)</li>
+            <li>Network design and monitoring</li>
+          </ul>
+          <div style="margin-top:12px"><a class="cta" href="#contact">Choose Business</a></div>
+        </div>
+
+        <div class="price-card" aria-hidden="true">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <div><strong>Enterprise</strong><div style="color:var(--muted); font-size:13px">Custom solutions</div></div>
+            <div style="font-weight:800">Custom</div>
+          </div>
+          <div style="margin-top:10px; color:var(--muted)">Custom SLAs, on-site support, full platform builds and integrations.</div>
+          <ul style="margin-top:12px; color:var(--muted)">
+            <li>Dedicated engineering team</li>
+            <li>24/7 SOC integration</li>
+            <li>On-prem & cloud hybrid options</li>
+          </ul>
+          <div style="margin-top:12px"><a class="cta" href="#contact">Contact Sales</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container" aria-labelledby="contact-heading" style="margin-bottom:32px">
+      <div style="text-align:center; margin-bottom:18px">
+        <h2 id="contact-heading">Contact us</h2>
+        <p style="color:var(--muted); margin-top:8px">Tell us about your project — we’ll reply within one business day.</p>
+      </div>
+
+      <div class="grid two" style="align-items:start">
+        <div>
+          <form class="contact-form" id="contactForm" onsubmit="handleContact(event)" aria-label="Contact form">
+            <label for="name">Full name</label>
+            <input id="name" name="name" required placeholder="chris Lee" />
+
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required placeholder="you@company.com" />
+
+            <label for="service">Interested in</label>
+            <select id="service" name="service" required>
+              <option value="">Pick a service</option>
+              <option>Data Analysis & BI</option>
+              <option>Cyber Security</option>
+              <option>Website Design</option>
+              <option>Tech Consultation</option>
+              <option>Networking</option>
+              <option>System Development</option>
+            </select>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your needs..." required></textarea>
+
+            <div style="display:flex; gap:10px; align-items:center">
+              <button type="submit">Send request</button>
+              <div style="color:var(--muted); font-size:13px">or email <a class="simple" href="mailto:hello@kringletech.example">hello@kringletech.example</a></div>
+            </div>
+            <div id="result" style="color:green; font-size:13px; display:none; margin-top:8px">Message prepared — please allow your email client to open.</div>
+          </form>
+        </div>
+
+        <div>
+          <div style="background:var(--card); padding:18px; border-radius:12px; box-shadow:var(--shadow)">
+            <h4 style="margin-top:0">Office</h4>
+            <p style="color:var(--muted); margin-bottom:8px">Kringle Tech Solutions Ltd.<br/>Narok, Kenya </p>
+            <p style="margin:0"><strong>Phone</strong><br/><a class="simple" href="tel:+254700000000">+254 757989086</a></p>
+            <p style="margin-top:8px"><strong>Hours</strong><br/><span style="color:var(--muted)">Mon–Fri 9:00–17:00</span></p>
+            <hr style="margin:14px 0; border:none; border-top:1px solid rgba(10,12,18,0.04)"/>
+            <p style="font-size:13px; color:var(--muted)">We respect your privacy. If you prefer a secure channel for sensitive details (security assessment scope), mention it and we'll arrange encrypted exchange.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="foot-inner">
+      <div>
+        <div style="display:flex; gap:10px; align-items:center">
+          <div class="logo" style="width:36px;height:36px;font-size:16px;border-radius:8px">K</div>
+          <div>
+            <div style="font-weight:700">Kringle Tech Solutions</div>
+            <div style="font-size:13px;color:var(--muted)">Data • Security • Web</div>
+          </div>
+        </div>
+        <div style="margin-top:12px; color:var(--muted); font-size:13px">© <span id="year"></span> Kringle Tech Solutions. All rights reserved.</div>
+      </div>
+
+      <div style="display:flex; gap:14px; align-items:center; color:var(--muted)">
+        <a href="#" style="text-decoration:none; color:inherit; font-size:14px">Privacy</a>
+        <a href="#" style="text-decoration:none; color:inherit; font-size:14px">Terms</a>
+        <a href="#" style="text-decoration:none; color:inherit; font-size:14px">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const menu = document.getElementById('mobile-menu');
+      btn && btn.addEventListener('click', function(){
+        const open = menu.style.display === 'block';
+        menu.style.display = open ? 'none' : 'block';
+        btn.setAttribute('aria-expanded', String(!open));
+      });
+    })();
+
+    // Contact form handler: builds a mailto and opens user's email client as fallback
+    function handleContact(e){
+      e.preventDefault();
+      const form = e.target;
+      const name = encodeURIComponent(form.name.value.trim());
+      const email = encodeURIComponent(form.email.value.trim());
+      const service = encodeURIComponent(form.service.value.trim() || 'General');
+      const messageRaw = form.message.value.trim();
+      const message = encodeURIComponent(
+        "Name: " + form.name.value.trim() + "\\n" +
+        "Email: " + form.email.value.trim() + "\\n" +
+        "Service: " + form.service.value.trim() + "\\n\\n" +
+        messageRaw
+      );
+
+      // Primary: open mailto (works in most browsers)
+      const subject = encodeURIComponent("Kringle Tech enquiry — " + service + " — " + name);
+      const to = "hello@kringletech.example"; // replace with your real address
+      const mailto = `mailto:${to}?subject=${subject}&body=${message}`;
+
+      // Attempt to open mail client
+      const opened = window.location.href = mailto;
+
+      // Show local result (helpful if mail client is not configured)
+      const res = document.getElementById('result');
+      if(res){
+        res.style.display = 'block';
+        res.textContent = 'Your email client should open. If nothing happens, send to hello@kringletech.example';
+      }
+      // Also log to console for developer testing
+      console.log('Prepared mailto:', mailto);
+    }
+
+    // Set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
